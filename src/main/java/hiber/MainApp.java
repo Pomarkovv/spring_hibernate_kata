@@ -34,8 +34,10 @@ public class MainApp {
          System.out.println("First Name = " + user.getFirstName());
          System.out.println("Last Name = " + user.getLastName());
          System.out.println("Email = " + user.getEmail());
-         System.out.println("car = " + user.getCar());
+         System.out.println("car = " + user.getCar().getModel());
       }
+      User findedUser = userService.findUser("Mercedes e-class", 12345);
+      System.out.println(findedUser.getFirstName());
       context.close();
    }
 }
