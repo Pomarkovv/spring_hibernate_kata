@@ -41,18 +41,9 @@ public class UserDaoImp implements UserDao {
    }
 
    public User findUser(String model, int series) {
-      TypedQuery<Car> findCar = sessionFactory.getCurrentSession().createQuery("from Car where model =:model and series =:series")
+      TypedQuery<Car> findCar = sessionFactory.getCurrentSession().createQuery("from Car as c where c.model =:model and c.series =:series")
               .setParameter("model", model)
               .setParameter("series", series);
-      List<Car> findedCars = findCar.getResultList();
-      if (!findedCars.isEmpty()) {
-         List<User> users = listUsers();
-         User findedUser = users.stream()
-                 .filter(user -> user.getCar().equals(findedCars.get(0)))
-                 .findAny()
-                 .orElse(null);
-         return findedUser;
+      return findCar.getSingleResult().getUser();
       }
-      return null;
-   }
 }
